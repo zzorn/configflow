@@ -2,7 +2,7 @@ package org.configflow;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Used to work with config objects.
@@ -24,12 +24,12 @@ public interface Configurator {
     /**
      * @return name, type and any metadata (configuration annotations) for each property.
      */
-    List<Prop> getProperties(Object conf);
+    Collection<Prop> getProperties(Object conf);
 
     /**
      * @return names of the properties in the specified object.
      */
-    List<String> getPropertyNames(Object conf);
+    Collection<String> getPropertyNames(Object conf);
 
     /**
      * Set the value of a property of a configuration object.
@@ -44,7 +44,7 @@ public interface Configurator {
     /**
      * @return a deep copy of the specified configuration object.
      */
-    Object deepCopy(Object conf);
+    <T> T deepCopy(T conf);
 
     /**
      * Loads a configuration object from a stream.
