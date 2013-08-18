@@ -13,9 +13,10 @@ import static org.flowutils.MathFlow.map;
  * Panel with a slide control component.
  */
 public class SlidePanel extends JPanel {
-    private static final Color SLIDER_BG_COLOR = new Color(0.5f, 0.5f, 0.5f);
-    private static final Color SLIDER_FG_COLOR = new Color(1f, 1f, 1f);
+    private static final Color SLIDER_BG_COLOR = new Color(0.63f, 0.62f, 0.61f);
+    private static final Color SLIDER_FG_COLOR = new Color(1f, 0.98f, 0.96f);
     private static final Color SLIDER_EDGE_COLOR = new Color(0f, 0f, 0f);
+    private static final Color SLIDER_BAR_COLOR = new Color(0.8f, 0.7f, 0.6f);
 
 
     private boolean continuousUpdate;
@@ -152,20 +153,28 @@ public class SlidePanel extends JPanel {
             g2.fillRect(0, 0, w, h);
         }
 
-        // TODO: Draw ticks
-        // Draw origo
-        int zeroX = (int) (relativePosAtValue(origoValue) * w);
-        if (zeroX >= 0 && zeroX <= w) {
-            g2.setColor(SLIDER_EDGE_COLOR);
-            g2.drawLine(zeroX -1, 0, zeroX -1, h);
-            g2.drawLine(zeroX + 1, 0, zeroX + 1, h);
-            g2.setColor(SLIDER_FG_COLOR);
-            g2.drawLine(zeroX , 0, zeroX , h);
-        }
-
-        // Draw indicator
         double sliderPos = relativePosAtValue(value);
         int sliderX = (int) (sliderPos * w);
+        int zeroX = (int) (relativePosAtValue(origoValue) * w);
+
+        // Draw bar
+        if (backgroundColorizer == null) {
+            int startX = sliderX < zeroX ? sliderX : zeroX;
+            int barW = Math.abs(sliderX - zeroX);
+            g2.setColor(SLIDER_BAR_COLOR);
+            g2.fillRect(startX, 0, barW, h);
+        }
+
+        // Draw origo
+        if (zeroX >= 0 && zeroX <= w) {
+            g2.setColor(SLIDER_EDGE_COLOR);
+            g2.fillRect(zeroX -2, 0, 4, h);
+            g2.setColor(SLIDER_FG_COLOR);
+            g2.fillRect(zeroX -1, 0, 2, h);
+        }
+        // TODO: Draw ticks
+
+        // Draw indicator
         if (sliderX >= -h && sliderX <= w + h) {
             fillRhomb(g2, sliderX, h / 2, h - 1, h - 1, SLIDER_EDGE_COLOR);
             fillRhomb(g2, sliderX, h / 2, h - 5, h - 5, SLIDER_FG_COLOR);

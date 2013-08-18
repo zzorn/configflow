@@ -1,5 +1,7 @@
 package org.configflow.utils;
 
+import org.flowutils.MathFlow;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -7,6 +9,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+
+import static java.lang.Math.*;
+import static org.flowutils.MathFlow.Tau;
+import static org.flowutils.MathFlow.map;
 
 /**
  * Quick to use number editor.
@@ -35,6 +41,36 @@ public class NumberField extends JPanel {
 
     private double value;
     private double unmodifiedSlideValue;
+
+    private final static ColorGradient magnitudeColoring = createMagnitudeColoring();
+
+    private static ColorGradient createMagnitudeColoring() {
+        final ColorGradient gradient = new ColorGradient();
+
+        gradient.addColor(  -6,     new Color(0.40784314f, 0.0f, 1.0f));
+        gradient.addColor(  -5,     new Color(0.36078432f, 0.25490198f, 0.90588236f));
+        gradient.addColor(  -4,     new Color(0.44313726f, 0.5137255f, 1.0f));
+        gradient.addColor(  -3,     new Color(0.6039216f, 0.69803923f, 1.0f));
+        gradient.addColor(  -1.5,     new Color(0.15686275f, 0.8784314f, 0.92156863f));
+        gradient.addColor(  -0.8,   new Color(0.69411767f, 0.8745098f, 0.89411765f));
+        gradient.addColor(  -0.25,  new Color(0.6117647f, 0.87058824f, 0.8f));
+        gradient.addColor(  -0.1,  new Color(0.8784314f, 0.9607843f, 0.8627451f));
+        gradient.addColor(   0,     new Color(1.0f, 1.0f, 1.0f));
+        gradient.addColor(   0.1,  new Color(0.96f,0.94f, 0.8f));
+        gradient.addColor(   0.2,  new Color(0.9f, 0.7f, 0.5f));
+        gradient.addColor(   0.5,  new Color(0.79607844f, 0.8784314f, 0.19607843f));
+        gradient.addColor(   1,   new Color(0.6745098f, 0.84313726f, 0.16862746f));
+        gradient.addColor(   2,     new Color(0.16862746f, 0.8666667f, 0.10980392f));
+        gradient.addColor(   3,     new Color(0.7529412f, 0.95686275f, 0.2f));
+        gradient.addColor(   4,     new Color(0.98039216f, 0.9411765f, 0.06666667f));
+        gradient.addColor(   5,     new Color(1.0f, 0.7f, 0.0f));
+        gradient.addColor(   6,     new Color(1.0f, 0.0f, 0.0f));
+        gradient.addColor(   7,     new Color(0.9098039f, 0.17254902f, 0.45490196f));
+        gradient.addColor(   8,     new Color(0.9098039f, 0.20392157f, 0.84705883f));
+        gradient.addColor(   9,     new Color(0.7921569f, 0.17254902f, 0.87058824f));
+
+        return gradient;
+    }
 
     public NumberField(double value) {
         this(value, 1, false, false, true, false, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
@@ -87,7 +123,7 @@ public class NumberField extends JPanel {
 
                 // Apply tuning factor
                 double factor = tuneFactor > 0 == unmodifiedSlideValue > 0 ? tuneFactor*TUNE_UP_FACTOR : tuneFactor*TUNE_DOWN_FACTOR;
-                value = unmodifiedSlideValue + Math.abs(unmodifiedSlideValue) * factor;
+                value = unmodifiedSlideValue + abs(unmodifiedSlideValue) * factor;
 
                 // Update field value
                 updateFieldFromValue();
@@ -145,21 +181,27 @@ public class NumberField extends JPanel {
     }
 
     private void updateFieldFromValue() {
+        final double value = getValue();
+
         String s;
         if (restrictToInteger) {
-            s = Integer.toString((int) getValue());
+            s = Integer.toString((int) value);
         }
         else if (restrictToFloat) {
-            s = Float.toString((float) getValue());
+            s = Float.toString((float) value);
         }
         else {
-            s = Double.toString(getValue());
+            s = Double.toString(value);
         }
 
         // Strip decimal point from end if even integer
         if (s.endsWith(".0")) s = s.substring(0, s.length() - 2);
 
         field.setText(s);
+
+        // Update color based on number scale
+        double magnitude = value == 0 ? 0 : (value > 0 ? log(value + 1) : -log(-value + 1));
+        field.setBackground(magnitudeColoring.getColorMixed(magnitude, 0.2, Color.WHITE));
         field.repaint();
     }
 
