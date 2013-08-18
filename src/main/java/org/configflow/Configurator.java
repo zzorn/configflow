@@ -83,4 +83,14 @@ public interface Configurator {
      */
     <T> Editor<T> createEditor(Object confObject, Prop<T> property);
 
+    /**
+     * Creates a deep copy of the source object and puts it in the copy buffer.
+     */
+    void copyToClipboard(Object source);
+
+    /**
+     * @return a new deep copy of the current copy buffer.
+     */
+    Object copyFromClipboard();
+
 }

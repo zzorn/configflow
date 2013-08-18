@@ -20,7 +20,7 @@ public class FloatEditor extends EditorBase<Float> implements NumberFieldListene
         return numberField;
     }
 
-    @Override protected void onUpdate() {
+    @Override protected void setUiFromValue() {
         numberField.setValue(getValue());
     }
 

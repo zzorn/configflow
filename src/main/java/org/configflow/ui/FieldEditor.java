@@ -52,8 +52,9 @@ public class FieldEditor<T> extends EditorBase<T> {
         setValue((T) field.getValue());
     }
 
-    @Override protected void onUpdate() {
+    @Override protected void setUiFromValue() {
         field.setValue(getValue());
     }
+
 
 }

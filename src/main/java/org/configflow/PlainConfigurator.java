@@ -27,6 +27,8 @@ public class PlainConfigurator implements Configurator {
 
     private final Kryo serializer;
 
+    private Object copyBuffer;
+
     public PlainConfigurator(Class ... typesToRegister) {
         serializer = new Kryo();
         serializer.setRegistrationRequired(true);
@@ -164,7 +166,8 @@ public class PlainConfigurator implements Configurator {
     }
 
     @Override public <T> T deepCopy(T conf) {
-        return serializer.copy(conf);
+        if (conf == null) return null;
+        else return serializer.copy(conf);
     }
 
     @Override public <T> T loadConf(InputStream inputStream, Class<T> expectedType) {
@@ -207,6 +210,14 @@ public class PlainConfigurator implements Configurator {
         editor.init(this, confObject, property);
 
         return editor;
+    }
+
+    @Override public void copyToClipboard(Object source) {
+        copyBuffer = deepCopy(source);
+    }
+
+    @Override public Object copyFromClipboard() {
+        return deepCopy(copyBuffer);
     }
 
     private Map<String, Prop> getPropMap(Object conf) {

@@ -38,4 +38,7 @@ public interface Editor<T> {
      */
     void setListener(EditorListener listener);
 
+    T getValue();
+
+    void setValue(T value);
 }

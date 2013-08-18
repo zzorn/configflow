@@ -20,7 +20,7 @@ public class DoubleEditor extends EditorBase<Double> implements NumberFieldListe
         return numberField;
     }
 
-    @Override protected void onUpdate() {
+    @Override protected void setUiFromValue() {
         numberField.setValue(getValue());
     }
 

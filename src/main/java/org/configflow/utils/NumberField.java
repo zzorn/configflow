@@ -203,6 +203,7 @@ public class NumberField extends JPanel {
     public void setValue(double value) {
         undoStack.push(this.value);
         this.value = value;
+        updateFieldFromValue();
         repaint();
         // TODO: Release mouse drag
     }

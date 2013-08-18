@@ -75,18 +75,25 @@ public abstract class EditorBase<T> implements Editor<T> {
         return configurator;
     }
 
-    protected final T getValue() {
+    @Override public final T getValue() {
         checkInitialized();
         return property.getValue(confObject);
     }
 
-    protected final void setValue(T value) {
+    @Override public final void setValue(T value) {
         checkInitialized();
         property.setValue(confObject, value);
+
+        setUiFromValue();
+        if (ui != null) {
+            ui.repaint();
+        }
 
         // Notify listener
         notifyEdit();
     }
+
+    protected abstract void setUiFromValue();
 
     /**
      * Notify listeners that the property was changed.
@@ -101,7 +108,9 @@ public abstract class EditorBase<T> implements Editor<T> {
 
     protected void onInit(Prop<T> property) {}
 
-    protected abstract void onUpdate();
+    protected void onUpdate() {
+        setUiFromValue();
+    }
 
     private void checkInitialized() {
         if (property == null) throw new IllegalStateException("Editor not yet initialized, need to call init first");

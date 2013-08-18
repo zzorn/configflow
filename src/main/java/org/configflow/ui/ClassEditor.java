@@ -19,7 +19,7 @@ public class ClassEditor extends EditorBase<Object> {
         editorCore.onDispose();
     }
 
-    @Override protected void onUpdate() {
+    @Override protected void setUiFromValue() {
         editorCore.onUpdate(getConfigurator(), getValue());
     }
 

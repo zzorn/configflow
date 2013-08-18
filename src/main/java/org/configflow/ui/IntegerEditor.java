@@ -20,7 +20,7 @@ public class IntegerEditor extends EditorBase<Integer> implements NumberFieldLis
         return numberField;
     }
 
-    @Override protected void onUpdate() {
+    @Override protected void setUiFromValue() {
         numberField.setValue(getValue());
     }
 

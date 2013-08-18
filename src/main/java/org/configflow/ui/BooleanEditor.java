@@ -27,7 +27,7 @@ public class BooleanEditor extends EditorBase<Boolean> {
         return checkBox;
     }
 
-    @Override protected void onUpdate() {
+    @Override protected void setUiFromValue() {
         checkBox.setSelected(getValue());
     }
 }
