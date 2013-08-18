@@ -6,6 +6,7 @@ package org.configflow;
 public class Troll {
     private String name;
     private int hitpoints;
+    private boolean terrible;
 
     private Troll() {
     }
@@ -15,6 +16,7 @@ public class Troll {
         this.hitpoints = hitpoints;
     }
 
+    @Desc("Name of this enemy")
     public String getName() {
         return name;
     }
@@ -23,11 +25,21 @@ public class Troll {
         this.name = name;
     }
 
+    @Desc("Health of the enemy")
     public int getHitpoints() {
         return hitpoints;
     }
 
     public void setHitpoints(int hitpoints) {
         this.hitpoints = hitpoints;
+    }
+
+    @Desc("Wether this enemy is extra terrible")
+    public boolean isTerrible() {
+        return terrible;
+    }
+
+    public void setTerrible(boolean terrible) {
+        this.terrible = terrible;
     }
 }

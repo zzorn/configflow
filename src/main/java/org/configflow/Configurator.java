@@ -1,8 +1,14 @@
 package org.configflow;
 
+
+import org.configflow.ui.EditorFrame;
+import org.configflow.ui.Editor;
+import org.configflow.ui.EditorListener;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Used to work with config objects.
@@ -62,5 +68,19 @@ public interface Configurator {
      * @throws ConfigurationException if the configuration could not be saved.
      */
     void saveConf(OutputStream outputStream, Object conf);
+
+    /**
+     * Creates and opens editor for the specified configuration object.
+     *
+     * @param conf root config object to open.
+     * @param listener a listener that will be notified about edits, or null.
+     * @return a reference to the editor is returned.
+     */
+    EditorFrame openEditor(Object conf, EditorListener listener);
+
+    /**
+     * @return new editor that can be used to edit the specified property of the specified conf object.
+     */
+    <T> Editor<T> createEditor(Object confObject, Prop<T> property);
 
 }
