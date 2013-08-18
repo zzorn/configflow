@@ -47,27 +47,22 @@ public class NumberField extends JPanel {
     private static ColorGradient createMagnitudeColoring() {
         final ColorGradient gradient = new ColorGradient();
 
-        gradient.addColor(  -6,     new Color(0.40784314f, 0.0f, 1.0f));
-        gradient.addColor(  -5,     new Color(0.36078432f, 0.25490198f, 0.90588236f));
-        gradient.addColor(  -4,     new Color(0.44313726f, 0.5137255f, 1.0f));
-        gradient.addColor(  -3,     new Color(0.6039216f, 0.69803923f, 1.0f));
-        gradient.addColor(  -1.5,     new Color(0.15686275f, 0.8784314f, 0.92156863f));
-        gradient.addColor(  -0.8,   new Color(0.69411767f, 0.8745098f, 0.89411765f));
-        gradient.addColor(  -0.25,  new Color(0.6117647f, 0.87058824f, 0.8f));
-        gradient.addColor(  -0.1,  new Color(0.8784314f, 0.9607843f, 0.8627451f));
+        gradient.addColor(  -4,     new Color(0.36078432f, 0.047058824f, 0.5529412f));
+        gradient.addColor(  -3,     new Color(0.45490196f, 0.05882353f, 0.7607843f));
+        gradient.addColor(  -2,     new Color(0.0627451f, 0.050980393f, 0.827451f));
+        gradient.addColor(  -1,     new Color(0.24705882f, 0.60784316f, 0.8509804f));
+        gradient.addColor(  -0.2,   new Color(0.06666667f, 0.8627451f, 0.9098039f));
+        gradient.addColor(  -0.03,   new Color(0.44313726f, 0.5803922f, 0.6431373f));
         gradient.addColor(   0,     new Color(1.0f, 1.0f, 1.0f));
-        gradient.addColor(   0.1,  new Color(0.96f,0.94f, 0.8f));
-        gradient.addColor(   0.2,  new Color(0.9f, 0.7f, 0.5f));
-        gradient.addColor(   0.5,  new Color(0.79607844f, 0.8784314f, 0.19607843f));
-        gradient.addColor(   1,   new Color(0.6745098f, 0.84313726f, 0.16862746f));
-        gradient.addColor(   2,     new Color(0.16862746f, 0.8666667f, 0.10980392f));
-        gradient.addColor(   3,     new Color(0.7529412f, 0.95686275f, 0.2f));
-        gradient.addColor(   4,     new Color(0.98039216f, 0.9411765f, 0.06666667f));
-        gradient.addColor(   5,     new Color(1.0f, 0.7f, 0.0f));
-        gradient.addColor(   6,     new Color(1.0f, 0.0f, 0.0f));
-        gradient.addColor(   7,     new Color(0.9098039f, 0.17254902f, 0.45490196f));
-        gradient.addColor(   8,     new Color(0.9098039f, 0.20392157f, 0.84705883f));
-        gradient.addColor(   9,     new Color(0.7921569f, 0.17254902f, 0.87058824f));
+        gradient.addColor(   0.03,  new Color(0.28627452f, 0.68235296f, 0.5372549f));
+        gradient.addColor(   0.2,   new Color(0.11372549f, 0.8156863f, 0.17254902f));
+        gradient.addColor(   1,     new Color(0.8039216f, 0.95686275f, 0.13333334f));
+        gradient.addColor(   2,     new Color(0.98039216f, 0.9411765f, 0.06666667f));
+        gradient.addColor(   3,     new Color(1.0f, 0.7f, 0.0f));
+        gradient.addColor(   4,     new Color(1.0f, 0.0f, 0.0f));
+        gradient.addColor(   5,     new Color(0.9098039f, 0.17254902f, 0.45490196f));
+        gradient.addColor(   6,     new Color(0.9098039f, 0.20392157f, 0.84705883f));
+        gradient.addColor(   7,     new Color(0.7921569f, 0.17254902f, 0.87058824f));
 
         return gradient;
     }
@@ -200,8 +195,8 @@ public class NumberField extends JPanel {
         field.setText(s);
 
         // Update color based on number scale
-        double magnitude = value == 0 ? 0 : (value > 0 ? log(value + 1) : -log(-value + 1));
-        field.setBackground(magnitudeColoring.getColorMixed(magnitude, 0.2, Color.WHITE));
+        double magnitude = value == 0 ? 0 : (value > 0 ? log10(value + 1) : -log10(-value + 1));
+        field.setBackground(magnitudeColoring.getColorMixed(magnitude, 0.25, Color.WHITE));
         field.repaint();
     }
 
